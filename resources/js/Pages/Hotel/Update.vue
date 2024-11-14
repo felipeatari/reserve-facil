@@ -1,8 +1,7 @@
 <script setup>
 import Layout from '../../Components/Layouts/App.vue'
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
+import { router, useForm } from '@inertiajs/vue3'
 
 const props = defineProps({
     user: Object,
@@ -10,47 +9,35 @@ const props = defineProps({
     hotel: Object,
 })
 
-const name = ref(props.hotel.name)
-const zipCode = ref(props.hotel.zip_code)
-const city = ref(props.hotel.city)
-const state = ref(props.hotel.state)
-const address = ref(props.hotel.address)
-const website = ref(props.hotel.website)
+const form = useForm({
+    name: props.hotel.name,
+    zip_code: props.hotel.zip_code,
+    city: props.hotel.city,
+    state: props.hotel.state,
+    address: props.hotel.address,
+    website: props.hotel.website,
+})
 
 
 const search = async (event) => {
-    zipCode.value = event.target.value
+    form.zip_code.value = event.target.value
 
     await axios
-        .get(`https://viacep.com.br/ws/${zipCode.value}/json/`)
+        .get(`https://viacep.com.br/ws/${form.zip_code.value}/json/`)
         .then(response => {
             if (response.data.erro) return
 
-            zipCode.value = response.data.cep
-            city.value = response.data.localidade
-            state.value = response.data.estado
-            address.value = response.data.logradouro
+            form.zip_code = response.data.cep
+            form.city = response.data.localidade
+            form.state = response.data.estado
+            form.address = response.data.logradouro
         })
         .catch(error => {
             console.log(error.message)
         })
 }
 
-const update = () => {
-    const page = usePage()
-
-    const form = ref({
-        _token: page.props.csrf_token,
-        name: name.value,
-        zip_code: zipCode.value,
-        city: city.value,
-        state: state.value,
-        address: address.value,
-        website: website.value,
-    })
-
-    router.post(`/hotel/editar-salvar/${props.hotel.id}`, form.value)
-}
+const update = () => router.post(`/hotel/editar-salvar/${props.hotel.id}`, form)
 
 const backToPage = () => router.get(`/hotel/ver/${props.hotel.id}`)
 </script>
@@ -69,35 +56,35 @@ const backToPage = () => router.get(`/hotel/ver/${props.hotel.id}`)
                     <div class="flex flex-col">
                         <div class="mt-3 mb-3 flex">
                             <span class="px-2 py-1 font-semibold">Nome:</span>
-                            <input v-model="name" class="w-full px-2 py-1 border rounded-md" type="text">
+                            <input v-model="form.name" class="w-full px-2 py-1 border rounded-md" type="text">
                         </div>
 
                         <div class="flex">
                             <div class="mt-3 mb-3 flex">
                                 <span class="px-2 py-1 font-semibold">CEP:</span>
-                                <input v-model="zipCode" @input="search" class="w-full px-2 py-1 border rounded-md"
+                                <input v-model="form.zip_code" @input="search" class="w-full px-2 py-1 border rounded-md"
                                     type="text">
                             </div>
 
                             <div class="mt-3 mb-3 flex">
                                 <span class="px-2 py-1 font-semibold">Cidade:</span>
-                                <input v-model="city" class="w-full px-2 py-1 border rounded-md" type="text">
+                                <input v-model="form.city" class="w-full px-2 py-1 border rounded-md" type="text">
                             </div>
 
                             <div class="mt-3 mb-3 flex">
                                 <span class="px-2 py-1 font-semibold">Estado:</span>
-                                <input v-model="state" class="w-full px-2 py-1 border rounded-md" type="text">
+                                <input v-model="form.state" class="w-full px-2 py-1 border rounded-md" type="text">
                             </div>
                         </div>
 
                         <div class="mt-3 mb-3 flex">
                             <span class="px-2 py-1 font-semibold">Endereço:</span>
-                            <input v-model="address" class="w-full px-2 py-1 border rounded-md" type="text">
+                            <input v-model="form.address" class="w-full px-2 py-1 border rounded-md" type="text">
                         </div>
 
                         <div class="mt-3 mb-3 flex">
                             <span class="px-2 py-1 font-semibold">Site:</span>
-                            <input v-model="website" class="w-full px-2 py-1 border rounded-md" type="text">
+                            <input v-model="form.website" class="w-full px-2 py-1 border rounded-md" type="text">
                         </div>
                     </div>
 

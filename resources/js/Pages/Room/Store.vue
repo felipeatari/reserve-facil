@@ -1,8 +1,6 @@
 <script setup>
-import axios from 'axios'
 import Layout from '../../Components/Layouts/App.vue'
-import { ref } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
+import { router, useForm } from '@inertiajs/vue3'
 
 defineProps({
     user: Object,
@@ -10,22 +8,13 @@ defineProps({
     hotels: Object,
 })
 
-const hotelId = ref(null)
-const name = ref(null)
-const description = ref(null)
+const form = useForm({
+    hotel_id: null,
+    name: null,
+    description: null,
+})
 
-const store = () => {
-    const page = usePage()
-
-    const form = ref({
-        _token: page.props.csrf_token,
-        hotel_id: hotelId.value,
-        name: name.value,
-        description: description.value,
-    })
-
-    router.post('/quarto/cadastar-salvar', form.value)
-}
+const store = () => router.post('/quarto/cadastar-salvar', form)
 
 const backToPage = () => window.history.back()
 </script>
@@ -44,7 +33,7 @@ const backToPage = () => window.history.back()
                     <div class="flex flex-col">
                         <div class="mt-3 mb-3 flex">
                             <span class="py-1 mr-2 font-semibold">Hotel:</span>
-                            <select v-model="hotelId" class="w-full border px-2 py-1 overflow-auto scrollbar">
+                            <select v-model="form.hotel_id" class="w-full border px-2 py-1 overflow-auto scrollbar">
                                 <option></option>
                                 <option v-for="hotel in hotels" :key="hotel.id" :value="hotel.id">{{ hotel.name }}
                                 </option>
@@ -53,13 +42,13 @@ const backToPage = () => window.history.back()
 
                         <div class="mt-3 mb-3 flex">
                             <span class="py-1 mr-2 font-semibold">Nome:</span>
-                            <input v-model="name" class="w-full px-2 py-1 border rounded-md" type="text">
+                            <input v-model="form.name" class="w-full px-2 py-1 border rounded-md" type="text">
                         </div>
 
                         <div class="mt-3 mb-3 flex">
                             <div class="w-full">
                                 <span class="py-1 font-semibold">Descricao:</span>
-                                <textarea v-model="description"
+                                <textarea v-model="form.description"
                                     class="w-full h-32 border rounded-md px-2 py-1"></textarea>
                             </div>
                         </div>
