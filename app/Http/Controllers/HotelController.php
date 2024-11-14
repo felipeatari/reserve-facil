@@ -62,7 +62,7 @@ class HotelController extends Controller
      *
      * @return void
      */
-    public function storeScreen()
+    public function storeScreen(Request $request)
     {
         return Inertia::render('Hotel/Store', [
             'user' => fn () => $request->user()
@@ -113,7 +113,7 @@ class HotelController extends Controller
      *
      * @return void
      */
-    public function updateScreen(Hotel $hotel)
+    public function updateScreen(Hotel $hotel, Request $request)
     {
         return Inertia::render('Hotel/Update', [
             'user' => fn () => $request->user()

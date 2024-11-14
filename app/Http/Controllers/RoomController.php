@@ -29,7 +29,8 @@ class RoomController extends Controller
         return Inertia::render('Room/Index', [
             'user' => fn () => $request->user()
                 ? $request->user()->only('id', 'name', 'email')
-                : null,            'rooms' => $rooms,
+                : null,
+            'rooms' => $rooms,
             'pagination' => (new PaginationHelper($rooms, 3)),
             'page' => $request->get('pagina') ?? '1',
         ]);
@@ -53,7 +54,8 @@ class RoomController extends Controller
         return Inertia::render('Room/Show', [
             'user' => fn () => $request->user()
                 ? $request->user()->only('id', 'name', 'email')
-                : null,            'room' => $room,
+                : null,
+            'room' => $room,
             'hotelName' => $hotelName,
             'page' => $request->get('pagina') ?? '1',
         ]);
@@ -64,7 +66,7 @@ class RoomController extends Controller
      *
      * @return void
      */
-    public function storeScreen()
+    public function storeScreen(Request $request)
     {
         $hotels = Hotel::query()
             ->select(['id', 'name'])
@@ -117,12 +119,12 @@ class RoomController extends Controller
      *
      * @return void
      */
-    public function updateScreen(Room $room)
+    public function updateScreen(Room $room, Request $request)
     {
         $hotels = Hotel::query()
-        ->select(['id', 'name'])
-        ->orderBy('id', 'desc')
-        ->get();
+            ->select(['id', 'name'])
+            ->orderBy('id', 'desc')
+            ->get();
 
         return Inertia::render('Room/Update', [
             'user' => fn () => $request->user()
