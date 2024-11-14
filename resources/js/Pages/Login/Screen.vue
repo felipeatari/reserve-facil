@@ -1,18 +1,14 @@
 <script setup>
-import { ref } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
+import { router, useForm } from '@inertiajs/vue3'
 
 defineProps({ errors: Object })
 
-const page = usePage()
-
-const form = ref({
-    _token: page.props.csrf_token,
+const form = useForm({
     email: null,
     password: null,
 })
 
-const login = () => router.post('/authenticate', form.value)
+const login = () => router.post('/authenticate', form)
 </script>
 <template>
     <div class="w-full h-screen flex flex-col items-center bg-gray-50">
