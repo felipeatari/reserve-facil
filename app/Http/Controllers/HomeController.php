@@ -26,11 +26,11 @@ class HomeController extends Controller
         }
 
         return Inertia::render('Home/Index', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
             'hotel' => $hotel,
             'pagination' => (new PaginationHelper($hotel, 3)),
+            'userName' => fn () => $request->user()
+            ? $request->user()->name
+            : null,
         ]);
     }
 
@@ -47,14 +47,11 @@ class HomeController extends Controller
         $countRooms = $hotel->rooms()->count();
 
         return Inertia::render('Home/Show', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
             'hotel' => $hotel,
             'countRooms' => $countRooms,
             'rooms' => $rooms,
-            'user' => fn () => $request->user()
-            ? $request->user()->only('id', 'name', 'email')
+            'userName' => fn () => $request->user()
+            ? $request->user()->name
             : null,
         ]);
     }

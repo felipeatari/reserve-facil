@@ -3,10 +3,10 @@ import Layout from '../../Components/Layouts/App.vue'
 import { router, useForm } from '@inertiajs/vue3'
 
 const props = defineProps({
-    user: Object,
     errors: Object,
     room: Object,
     hotels: Object,
+    userName: String,
 })
 
 const form = useForm({
@@ -21,7 +21,7 @@ const backToPage = () => router.get(`/quarto/ver/${props.room.id}`)
 </script>
 
 <template>
-    <Layout :name="user.name">
+    <Layout :name="userName">
         <div class="w-full flex justify-center mt-10">
             <div class="bg-white w-[50em] px-10 py-10 shadow">
 

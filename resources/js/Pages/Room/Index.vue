@@ -6,17 +6,17 @@ import { ref } from 'vue'
 import Table from '../../Components/Helpers/Table.vue'
 
 defineProps({
-    rooms: Object,
     pagination: Object,
-    user: Object,
+    rooms: Object,
     page: String,
+    userName: String,
 })
 
 const entityType = ref('room')
 </script>
 
 <template>
-    <Layout :name="user.name">
+    <Layout :name="userName">
         <div class="w-full flex justify-center mt-10">
             <div v-if="pagination.countPages" class="bg-white w-full p-10 ml-10 mr-10 shadow">
                 <Link :href="'/quarto/cadastrar'">

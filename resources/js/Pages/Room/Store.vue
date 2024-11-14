@@ -3,9 +3,9 @@ import Layout from '../../Components/Layouts/App.vue'
 import { router, useForm } from '@inertiajs/vue3'
 
 defineProps({
-    user: Object,
     errors: Object,
     hotels: Object,
+    userName: String,
 })
 
 const form = useForm({
@@ -20,7 +20,7 @@ const backToPage = () => window.history.back()
 </script>
 
 <template>
-    <Layout :name="user.name">
+    <Layout :name="userName">
         <div class="w-full flex justify-center mt-10">
             <div class="bg-white w-[50em] px-10 py-10 shadow">
                 <h1 class="font-semibold text-xl mb-5">Cadastrar um Quarto</h1>

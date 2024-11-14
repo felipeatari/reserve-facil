@@ -6,17 +6,17 @@ import ModalDelete from '../../Components/Helpers/ModalDelete.vue'
 import UpdateIcon from '../../Components/Icons/Update.vue'
 
 const props = defineProps({
-    room: Object,
     hotelName: String,
-    user: Object,
+    room: Object,
     page: String,
+    userName: String,
 })
 
 const backToPage = () => router.get(`/quarto/listar?pagina=${props.page}`)
 </script>
 
 <template>
-    <Layout :name="user.name">
+    <Layout :name="userName">
         <div class="w-full flex justify-center mt-10">
             <div class="bg-white w-[900px] px-10 py-10 shadow">
                 <div class="w-full mb-5">

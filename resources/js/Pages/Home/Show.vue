@@ -7,7 +7,7 @@ const props = defineProps({
     hotel: Object,
     countRooms: Number,
     rooms: Object,
-    user: Object,
+    userName: String,
 })
 
 const more = ref(3)
@@ -40,7 +40,7 @@ const legendRooms = (countRooms) => {
 </script>
 
 <template>
-    <Layout :name="user.name">
+    <Layout :name="userName">
         <div class="w-full h-full flex flex-col items-center">
             <div class="w-[60em] flex flex-col mt-10 pt-6 pl-6 pr-6 text-bg-slate-950 bg-white shadow">
                 <div class="mb-6">

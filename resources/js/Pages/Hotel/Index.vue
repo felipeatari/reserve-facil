@@ -8,7 +8,7 @@ import Table from '../../Components/Helpers/Table.vue'
 defineProps({
     hotels: Object,
     pagination: Object,
-    user: Object,
+    userName: String,
     page: String,
 })
 
@@ -16,7 +16,7 @@ const entityType = ref('hotel')
 </script>
 
 <template>
-    <Layout :name="user.name">
+    <Layout :name="userName">
         <div class="w-full flex justify-center mt-10">
             <div v-if="pagination.countPages" class="bg-white w-full p-10 ml-10 mr-10 shadow">
                 <Link :href="'/hotel/cadastrar'">

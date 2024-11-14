@@ -26,12 +26,12 @@ class HotelController extends Controller
             ->paginate(6, pageName: 'pagina'); // Altera nome padrão de "page" para "página"
 
         return Inertia::render('Hotel/Index', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
             'hotels' => $hotels,
             'pagination' => (new PaginationHelper($hotels, 3)),
             'page' => $request->get('pagina') ?? '1',
+            'userName' => fn () => $request->user()
+            ? $request->user()->name
+            : null,
         ]);
     }
 
@@ -49,11 +49,11 @@ class HotelController extends Controller
         $hotel->updated = $hotel->updated_at->format('d/m/Y H:i:s');
 
         return Inertia::render('Hotel/Show', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
             'hotel' => $hotel,
             'page' => $request->get('pagina') ?? '1',
+            'userName' => fn () => $request->user()
+            ? $request->user()->name
+            : null,
         ]);
     }
 
@@ -65,9 +65,9 @@ class HotelController extends Controller
     public function storeScreen(Request $request)
     {
         return Inertia::render('Hotel/Store', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
+            'userName' => fn () => $request->user()
+            ? $request->user()->name
+            : null,
         ]);
     }
 
@@ -116,9 +116,9 @@ class HotelController extends Controller
     public function updateScreen(Hotel $hotel, Request $request)
     {
         return Inertia::render('Hotel/Update', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
+            'userName' => fn () => $request->user()
+            ? $request->user()->name
+            : null,
             'hotel' => $hotel
         ]);
     }

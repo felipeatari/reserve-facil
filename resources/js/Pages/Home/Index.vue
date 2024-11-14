@@ -6,7 +6,7 @@ import Pagination from '../../Components/Helpers/Pagination.vue'
 const props = defineProps({
     hotel: Object,
     pagination: Object,
-    user: Object,
+    userName: String,
 })
 
 const legendRooms = (hotelVacancies) => {
@@ -16,10 +16,12 @@ const legendRooms = (hotelVacancies) => {
 
     return 'quartos disponíveis.'
 }
+
+console.log(props.userName)
 </script>
 
 <template>
-    <Layout :name="user.name">
+    <Layout :name="userName">
         <div class="w-full flex flex-col items-center mt-5">
             <div class="w-[80em] h-[30em] flex items-center justify-center flex-wrap mb-5">
                 <div v-for="hotelItem in hotel.data" :key="hotelItem.id" class="w-80 flex flex-col bg-white shadow m-2">

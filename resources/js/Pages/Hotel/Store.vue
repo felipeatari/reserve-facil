@@ -4,7 +4,7 @@ import axios from 'axios'
 import { router, useForm } from '@inertiajs/vue3'
 
 defineProps({
-    user: Object,
+    userName: String,
     errors: Object,
 })
 
@@ -41,7 +41,7 @@ const backToPage = () => window.history.back()
 </script>
 
 <template>
-    <Layout :name="user.name">
+    <Layout :name="userName">
         <div class="w-full flex justify-center mt-10">
             <div class="bg-white w-[50em] px-10 py-10 shadow">
                 <h1 class="font-semibold text-xl mb-5">Cadastrar um Hotel</h1>

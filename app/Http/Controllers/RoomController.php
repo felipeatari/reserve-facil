@@ -27,12 +27,12 @@ class RoomController extends Controller
             ->paginate(6, pageName: 'pagina'); // Altera nome padrão de "page" para "página"
 
         return Inertia::render('Room/Index', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
             'rooms' => $rooms,
             'pagination' => (new PaginationHelper($rooms, 3)),
             'page' => $request->get('pagina') ?? '1',
+            'userName' => fn () => $request->user()
+                ? $request->user()->name
+                : null,
         ]);
     }
 
@@ -52,12 +52,12 @@ class RoomController extends Controller
         $room->updated = $room->updated_at->format('d/m/Y H:i:s');
 
         return Inertia::render('Room/Show', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
             'room' => $room,
             'hotelName' => $hotelName,
             'page' => $request->get('pagina') ?? '1',
+            'userName' => fn () => $request->user()
+                ? $request->user()->name
+                : null,
         ]);
     }
 
@@ -74,9 +74,9 @@ class RoomController extends Controller
             ->get();
 
         return Inertia::render('Room/Store', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,            'hotels' => $hotels,
+            'userName' => fn () => $request->user()
+                ? $request->user()->name
+                : null,
         ]);
     }
 
@@ -127,10 +127,11 @@ class RoomController extends Controller
             ->get();
 
         return Inertia::render('Room/Update', [
-            'user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,            'room' => $room,
+            'room' => $room,
             'hotels' => $hotels,
+            'userName' => fn () => $request->user()
+                ? $request->user()->name
+                : null,
         ]);
     }
 
