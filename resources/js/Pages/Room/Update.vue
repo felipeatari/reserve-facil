@@ -1,6 +1,5 @@
 <script setup>
 import Layout from '../../Components/Layouts/App.vue'
-import { ref } from 'vue'
 import { router, useForm } from '@inertiajs/vue3'
 
 const props = defineProps({
