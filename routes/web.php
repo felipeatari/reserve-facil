@@ -38,6 +38,6 @@ Route::group([
     Route::get('apagar/{room}', [RoomController::class, 'destroy']);
 });
 
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/authenticate', [LoginController::class, 'authenticate']);
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::middleware('guest')->get('/login', [LoginController::class, 'login'])->name('login');
+Route::middleware('guest')->post('/authenticate', [LoginController::class, 'authenticate']);
+Route::middleware('guest')->get('/logout', [LoginController::class, 'logout']);

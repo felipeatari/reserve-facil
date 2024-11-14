@@ -15,8 +15,6 @@ class LoginController extends Controller
      */
     public function login()
     {
-        if (Auth::user()) return redirect('/');
-
         return Inertia::render('Login/Screen');
     }
 
