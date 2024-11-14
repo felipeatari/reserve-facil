@@ -6,25 +6,37 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->middleware('auth');
-Route::get('/vagas/{hotel}', [HomeController::class, 'show'])->middleware('auth');
-Route::get('/mais-vagas/{hotel}/{more}', [HomeController::class, 'moreRooms'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/vagas/{hotel}', [HomeController::class, 'show']);
+    Route::get('/mais-vagas/{hotel}/{more}', [HomeController::class, 'moreRooms']);
+});
 
-Route::get('/hotel/listar', [HotelController::class, 'index'])->middleware('auth');
-Route::get('/hotel/ver/{hotel}', [HotelController::class, 'show'])->middleware('auth');
-Route::get('/hotel/cadastrar', [HotelController::class, 'storeScreen'])->middleware('auth');
-Route::post('/hotel/cadastar-salvar', [HotelController::class, 'store'])->middleware('auth');
-Route::get('/hotel/editar/{hotel}', [HotelController::class, 'updateScreen'])->middleware('auth');
-Route::post('/hotel/editar-salvar/{hotel}', [HotelController::class, 'update'])->middleware('auth');
-Route::get('/hotel/apagar/{hotel}', [HotelController::class, 'destroy'])->middleware('auth');
+Route::group([
+    'middleware' => 'auth',
+    'prefix' => 'hotel',
+], function() {
+    Route::get('listar', [HotelController::class, 'index']);
+    Route::get('ver/{hotel}', [HotelController::class, 'show']);
+    Route::get('cadastrar', [HotelController::class, 'storeScreen']);
+    Route::post('cadastar-salvar', [HotelController::class, 'store']);
+    Route::get('editar/{hotel}', [HotelController::class, 'updateScreen']);
+    Route::post('editar-salvar/{hotel}', [HotelController::class, 'update']);
+    Route::get('apagar/{hotel}', [HotelController::class, 'destroy']);
+});
 
-Route::get('/quarto/listar', [RoomController::class, 'index'])->middleware('auth');
-Route::get('/quarto/ver/{room}', [RoomController::class, 'show'])->middleware('auth');
-Route::get('/quarto/cadastrar', [RoomController::class, 'storeScreen'])->middleware('auth');
-Route::post('/quarto/cadastar-salvar', [RoomController::class, 'store'])->middleware('auth');
-Route::get('/quarto/editar/{room}', [RoomController::class, 'updateScreen'])->middleware('auth');
-Route::post('/quarto/editar-salvar/{room}', [RoomController::class, 'update'])->middleware('auth');
-Route::get('/quarto/apagar/{room}', [RoomController::class, 'destroy'])->middleware('auth');
+Route::group([
+    'middleware' => 'auth',
+    'prefix' => 'quarto',
+], function() {
+    Route::get('listar', [RoomController::class, 'index']);
+    Route::get('ver/{room}', [RoomController::class, 'show']);
+    Route::get('cadastrar', [RoomController::class, 'storeScreen']);
+    Route::post('cadastar-salvar', [RoomController::class, 'store']);
+    Route::get('editar/{room}', [RoomController::class, 'updateScreen']);
+    Route::post('editar-salvar/{room}', [RoomController::class, 'update']);
+    Route::get('apagar/{room}', [RoomController::class, 'destroy']);
+});
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/authenticate', [LoginController::class, 'authenticate']);
