@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\PaginationHelper;
 use App\Models\Hotel;
 use App\Services\HomeService;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -15,7 +15,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
         $hotel = Hotel::query()
         ->orderBy('id', 'DESC')
@@ -26,9 +26,11 @@ class HomeController extends Controller
         }
 
         return Inertia::render('Home/Index', [
-            'user' => Auth::user(),
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,
             'hotel' => $hotel,
-            'pagination' => (new PaginationHelper($hotel, 3))
+            'pagination' => (new PaginationHelper($hotel, 3)),
         ]);
     }
 
@@ -39,16 +41,21 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function show(Hotel $hotel)
+    public function show(Hotel $hotel, Request $request)
     {
         $rooms = $hotel->rooms()->limit(3)->get();
         $countRooms = $hotel->rooms()->count();
 
         return Inertia::render('Home/Show', [
-            'user' => Auth::user(),
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,
             'hotel' => $hotel,
             'countRooms' => $countRooms,
             'rooms' => $rooms,
+            'user' => fn () => $request->user()
+            ? $request->user()->only('id', 'name', 'email')
+            : null,
         ]);
     }
 

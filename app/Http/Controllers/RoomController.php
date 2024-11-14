@@ -8,7 +8,6 @@ use App\Models\Hotel;
 use App\Models\Room;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -28,8 +27,9 @@ class RoomController extends Controller
             ->paginate(6, pageName: 'pagina'); // Altera nome padrão de "page" para "página"
 
         return Inertia::render('Room/Index', [
-            'user' => Auth::user(),
-            'rooms' => $rooms,
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,            'rooms' => $rooms,
             'pagination' => (new PaginationHelper($rooms, 3)),
             'page' => $request->get('pagina') ?? '1',
         ]);
@@ -51,8 +51,9 @@ class RoomController extends Controller
         $room->updated = $room->updated_at->format('d/m/Y H:i:s');
 
         return Inertia::render('Room/Show', [
-            'user' => Auth::user(),
-            'room' => $room,
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,            'room' => $room,
             'hotelName' => $hotelName,
             'page' => $request->get('pagina') ?? '1',
         ]);
@@ -71,8 +72,9 @@ class RoomController extends Controller
             ->get();
 
         return Inertia::render('Room/Store', [
-            'user' => Auth::user(),
-            'hotels' => $hotels,
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,            'hotels' => $hotels,
         ]);
     }
 
@@ -123,8 +125,9 @@ class RoomController extends Controller
         ->get();
 
         return Inertia::render('Room/Update', [
-            'user' => Auth::user(),
-            'room' => $room,
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,            'room' => $room,
             'hotels' => $hotels,
         ]);
     }

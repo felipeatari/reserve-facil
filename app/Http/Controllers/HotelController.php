@@ -7,7 +7,6 @@ use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
 use App\Services\HotelService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -27,7 +26,9 @@ class HotelController extends Controller
             ->paginate(6, pageName: 'pagina'); // Altera nome padrão de "page" para "página"
 
         return Inertia::render('Hotel/Index', [
-            'user' => Auth::user(),
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,
             'hotels' => $hotels,
             'pagination' => (new PaginationHelper($hotels, 3)),
             'page' => $request->get('pagina') ?? '1',
@@ -48,7 +49,9 @@ class HotelController extends Controller
         $hotel->updated = $hotel->updated_at->format('d/m/Y H:i:s');
 
         return Inertia::render('Hotel/Show', [
-            'user' => Auth::user(),
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,
             'hotel' => $hotel,
             'page' => $request->get('pagina') ?? '1',
         ]);
@@ -62,7 +65,9 @@ class HotelController extends Controller
     public function storeScreen()
     {
         return Inertia::render('Hotel/Store', [
-            'user' => Auth::user(),
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,
         ]);
     }
 
@@ -111,7 +116,9 @@ class HotelController extends Controller
     public function updateScreen(Hotel $hotel)
     {
         return Inertia::render('Hotel/Update', [
-            'user' => Auth::user(),
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email')
+                : null,
             'hotel' => $hotel
         ]);
     }
