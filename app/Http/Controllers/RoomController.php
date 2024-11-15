@@ -13,13 +13,6 @@ use Inertia\Inertia;
 
 class RoomController extends Controller
 {
-    /**
-     * Carrega todos os quartos disponíveis com paginação e dados parciais
-     *
-     * @param Request $request
-     *
-     * @return void
-     */
     public function index(Request $request)
     {
         $room = Room::query()
@@ -32,14 +25,6 @@ class RoomController extends Controller
         ]);
     }
 
-    /**
-     * Carrega um quarto especifico com os dados completos
-     *
-     * @param Room $room
-     * @param Request $request
-     *
-     * @return void
-     */
     public function show(Room $room, Request $request)
     {
         $hotelName = $room->hotel()->select(['name'])->first()->name;
@@ -54,11 +39,6 @@ class RoomController extends Controller
         ]);
     }
 
-    /**
-     * Carrega a tela para cadastrar um quarto
-     *
-     * @return void
-     */
     public function storeScreen(Request $request)
     {
         $hotels = Hotel::query()
@@ -70,13 +50,6 @@ class RoomController extends Controller
         ]);
     }
 
-    /**
-     * Cadastra um quarto
-     *
-     * @param RoomRequest $request
-     *
-     * @return void
-     */
     public function store(RoomRequest $request)
     {
         if (! $inputs = $request->validated()) {
@@ -104,11 +77,6 @@ class RoomController extends Controller
         }
     }
 
-    /**
-     * Carrega a tela para editar um quarto
-     *
-     * @return void
-     */
     public function updateScreen(Room $room, Request $request)
     {
         $hotels = Hotel::query()
@@ -122,14 +90,6 @@ class RoomController extends Controller
         ]);
     }
 
-    /**
-     * Edita um quarto
-     *
-     * @param Room $room
-     * @param RoomRequest $request
-     *
-     * @return void
-     */
     public function update(Room $room, RoomRequest $request)
     {
         if (! $inputs = $request->validated()) return back();
@@ -154,13 +114,6 @@ class RoomController extends Controller
         }
     }
 
-    /**
-     * Apaga um quarto
-     *
-     * @param Room $room
-     *
-     * @return void
-     */
     public function destroy(Room $room)
     {
         DB::beginTransaction();
