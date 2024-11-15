@@ -6,8 +6,7 @@ import { ref } from 'vue'
 import Table from '../../Components/Helpers/Table.vue'
 
 defineProps({
-    pagination: Object,
-    rooms: Object,
+    room: Object,
     page: String,
     userName: String,
 })
@@ -18,15 +17,15 @@ const entityType = ref('room')
 <template>
     <Layout :name="userName">
         <div class="w-full flex justify-center mt-10">
-            <div v-if="pagination.countPages" class="bg-white w-full p-10 ml-10 mr-10 shadow">
+            <div v-if="room.data" class="bg-white w-full p-10 ml-10 mr-10 shadow">
                 <Link :href="'/quarto/cadastrar'">
                     <button class="border px-3 py-1 mb-7 font-semibold bg-blue-500 hover:bg-blue-700 text-white rounded shadow-sm">Cadastrar</button>
                 </Link>
 
                 <div class="w-full h-[22em] flex flex-col justify-between">
-                    <Table :entity="rooms" :entityType="entityType" :page="page" />
+                    <Table :entity="room" :entityType="entityType" :page="page" />
 
-                    <Pagination :pagination="pagination" />
+                    <Pagination :pagination="room" />
                 </div>
             </div>
             <div v-else class="bg-white w-full p-10 shadow">

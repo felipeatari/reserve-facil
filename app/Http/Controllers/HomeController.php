@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\PaginationHelper;
 use App\Models\Hotel;
 use App\Services\HomeService;
 use Illuminate\Http\Request;
@@ -19,7 +18,7 @@ class HomeController extends Controller
     {
         $hotel = Hotel::query()
         ->orderBy('id', 'DESC')
-        ->paginate(9, pageName: 'pagina'); // Altera nome padrão de "page" para "página"
+        ->paginate(9, pageName: 'pagina');
 
         foreach ($hotel->items() as $hotelItem) {
             $hotelItem->roomsCount = $hotelItem->rooms()->count();
@@ -27,10 +26,7 @@ class HomeController extends Controller
 
         return Inertia::render('Home/Index', [
             'hotel' => $hotel,
-            'pagination' => (new PaginationHelper($hotel, 3)),
-            'userName' => fn () => $request->user()
-            ? $request->user()->name
-            : null,
+            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
@@ -50,9 +46,7 @@ class HomeController extends Controller
             'hotel' => $hotel,
             'countRooms' => $countRooms,
             'rooms' => $rooms,
-            'userName' => fn () => $request->user()
-            ? $request->user()->name
-            : null,
+            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 

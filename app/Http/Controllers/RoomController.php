@@ -22,17 +22,14 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-        $rooms = Room::query()
+        $room = Room::query()
             ->orderBy('id', 'DESC')
-            ->paginate(6, pageName: 'pagina'); // Altera nome padrão de "page" para "página"
+            ->paginate(6, pageName: 'pagina');
 
         return Inertia::render('Room/Index', [
-            'rooms' => $rooms,
-            'pagination' => (new PaginationHelper($rooms, 3)),
+            'room' => $room,
             'page' => $request->get('pagina') ?? '1',
-            'userName' => fn () => $request->user()
-                ? $request->user()->name
-                : null,
+            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
@@ -55,9 +52,7 @@ class RoomController extends Controller
             'room' => $room,
             'hotelName' => $hotelName,
             'page' => $request->get('pagina') ?? '1',
-            'userName' => fn () => $request->user()
-                ? $request->user()->name
-                : null,
+            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
@@ -74,9 +69,7 @@ class RoomController extends Controller
             ->get();
 
         return Inertia::render('Room/Store', [
-            'userName' => fn () => $request->user()
-                ? $request->user()->name
-                : null,
+            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
@@ -129,9 +122,7 @@ class RoomController extends Controller
         return Inertia::render('Room/Update', [
             'room' => $room,
             'hotels' => $hotels,
-            'userName' => fn () => $request->user()
-                ? $request->user()->name
-                : null,
+            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 

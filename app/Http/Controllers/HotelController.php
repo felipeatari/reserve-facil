@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\PaginationHelper;
 use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
 use App\Services\HotelService;
@@ -21,17 +20,16 @@ class HotelController extends Controller
      */
     public function index(Request $request)
     {
-        $hotels = Hotel::query()
+        $hotel = Hotel::query()
             ->orderBy('id', 'DESC')
-            ->paginate(6, pageName: 'pagina'); // Altera nome padrão de "page" para "página"
+            ->paginate(6, pageName: 'pagina');
 
         return Inertia::render('Hotel/Index', [
-            'hotels' => $hotels,
-            'pagination' => (new PaginationHelper($hotels, 3)),
+            'hotel' => $hotel,
             'page' => $request->get('pagina') ?? '1',
             'userName' => fn () => $request->user()
-            ? $request->user()->name
-            : null,
+                ? $request->user()->name
+                : null,
         ]);
     }
 

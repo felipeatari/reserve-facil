@@ -1,21 +1,37 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
 
-defineProps({ pagination: Object })
-
-const currentPageChecked = (page, pageChecked) => {
-    return page == pageChecked
-}
+const props = defineProps({ pagination: Object })
 </script>
 
 <template>
-    <div class="w-full flex items-center justify-center">
-        <Link v-if="pagination.nextPage" class="border px-3 py-1 ml-1 font-semibold" :href="`${pagination.previousPageUrl}`"> < </Link>
-        <a v-else class="border px-3 py-1 ml-1 font-semibold text-gray-400"> < </a>
+    <div v-if="pagination.data.length > 0" class="w-full flex items-center justify-center">
+        <div v-for="link in pagination.links">
+            <Link v-if="link.label == 'pagination.previous' && link.url != null"
+            class="border px-3 py-1 ml-1 font-semibold"
+            :href="`${link.url}`"
+            > < </Link>
 
-        <Link v-for="page in pagination.pages" :href="`?pagina=${page}`" class="border px-3 py-1 ml-1 mr-1" :class="[currentPageChecked(page, pagination.currentPageChecked) ? 'bg-gray-300' : '']">{{ page }}</Link>
+            <a v-if="link.label == 'pagination.previous' && link.url == null"
+            class="border px-3 py-1 ml-1 font-semibold text-gray-400"
+            > < </a>
 
-        <Link v-if="pagination.previousPage" class="border px-3 py-1 ml-1 font-semibold" :href="`${pagination.nextPageUrl}`"> > </Link>
-        <a v-else class="border px-3 py-1 ml-1 font-semibold text-gray-400"> > </a>
+            <Link
+            v-if="link.label != 'pagination.previous' && link.label != 'pagination.next' && link.url"
+            class="border px-3 py-1 ml-1 font-semibold"
+            :class="[link.active ? 'bg-gray-300' : '']"
+            :href="`${link.url}`"
+            > {{ link.label }} </Link>
+
+            <Link v-if="link.label == 'pagination.next' && link.url != null"
+            class="border px-3 py-1 ml-1 font-semibold"
+            :href="`${link.url}`"
+            :disabled="true"
+            > > </Link>
+
+            <a v-if="link.label == 'pagination.next' && link.url == null"
+            class="border px-3 py-1 ml-1 font-semibold text-gray-400"
+            > > </a>
+        </div>
     </div>
 </template>

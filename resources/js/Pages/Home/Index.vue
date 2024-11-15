@@ -5,7 +5,6 @@ import Pagination from '../../Components/Helpers/Pagination.vue'
 
 const props = defineProps({
     hotel: Object,
-    pagination: Object,
     userName: String,
 })
 
@@ -16,8 +15,6 @@ const legendRooms = (hotelVacancies) => {
 
     return 'quartos disponíveis.'
 }
-
-console.log(props.userName)
 </script>
 
 <template>
@@ -32,7 +29,7 @@ console.log(props.userName)
                 </div>
             </div>
 
-            <Pagination :pagination="pagination" />
+            <Pagination :pagination="hotel" />
         </div>
     </Layout>
 </template>
