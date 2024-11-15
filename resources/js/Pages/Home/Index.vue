@@ -3,7 +3,7 @@ import Layout from '../../Components/Layouts/App.vue'
 import { Link } from '@inertiajs/vue3'
 import Pagination from '../../Components/Helpers/Pagination.vue'
 
-const props = defineProps({
+defineProps({
     hotel: Object,
     userName: String,
 })

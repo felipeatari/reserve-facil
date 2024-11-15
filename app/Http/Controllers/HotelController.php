@@ -27,9 +27,6 @@ class HotelController extends Controller
         return Inertia::render('Hotel/Index', [
             'hotel' => $hotel,
             'page' => $request->get('pagina') ?? '1',
-            'userName' => fn () => $request->user()
-                ? $request->user()->name
-                : null,
         ]);
     }
 
@@ -49,9 +46,6 @@ class HotelController extends Controller
         return Inertia::render('Hotel/Show', [
             'hotel' => $hotel,
             'page' => $request->get('pagina') ?? '1',
-            'userName' => fn () => $request->user()
-            ? $request->user()->name
-            : null,
         ]);
     }
 
@@ -62,11 +56,7 @@ class HotelController extends Controller
      */
     public function storeScreen(Request $request)
     {
-        return Inertia::render('Hotel/Store', [
-            'userName' => fn () => $request->user()
-            ? $request->user()->name
-            : null,
-        ]);
+        return Inertia::render('Hotel/Store');
     }
 
     /**
@@ -114,9 +104,6 @@ class HotelController extends Controller
     public function updateScreen(Hotel $hotel, Request $request)
     {
         return Inertia::render('Hotel/Update', [
-            'userName' => fn () => $request->user()
-            ? $request->user()->name
-            : null,
             'hotel' => $hotel
         ]);
     }

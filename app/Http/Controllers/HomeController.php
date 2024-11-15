@@ -26,7 +26,6 @@ class HomeController extends Controller
 
         return Inertia::render('Home/Index', [
             'hotel' => $hotel,
-            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
@@ -46,7 +45,6 @@ class HomeController extends Controller
             'hotel' => $hotel,
             'countRooms' => $countRooms,
             'rooms' => $rooms,
-            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 

@@ -3,7 +3,7 @@ import BackIcon from '../../Components/Icons/Back.vue'
 import Layout from '../../Components/Layouts/App.vue'
 import { ref } from 'vue'
 
-const props = defineProps({
+defineProps({
     hotel: Object,
     countRooms: Number,
     rooms: Object,

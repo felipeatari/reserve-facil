@@ -29,7 +29,6 @@ class RoomController extends Controller
         return Inertia::render('Room/Index', [
             'room' => $room,
             'page' => $request->get('pagina') ?? '1',
-            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
@@ -52,7 +51,6 @@ class RoomController extends Controller
             'room' => $room,
             'hotelName' => $hotelName,
             'page' => $request->get('pagina') ?? '1',
-            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
@@ -69,7 +67,6 @@ class RoomController extends Controller
             ->get();
 
         return Inertia::render('Room/Store', [
-            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
@@ -122,7 +119,6 @@ class RoomController extends Controller
         return Inertia::render('Room/Update', [
             'room' => $room,
             'hotels' => $hotels,
-            'userName' => fn () => $request->user() ? $request->user()->name : null,
         ]);
     }
 
