@@ -6,19 +6,27 @@ const props = defineProps({ status: Number })
 
 const title = computed(() => {
   return {
-    503: '503 Service Unavailable',
-    500: '500 Server Error',
-    404: '404 Page Not Found',
+    401: '401 Unauthorized',
+    402: '402 Payment Required',
     403: '403 Forbidden',
+    404: '404 Page Not Found',
+    419: '419 Page Expired',
+    429: '429 Too Many Requests',
+    500: '500 Server Error',
+    503: '503 Service Unavailable',
   }[props.status]
 })
 
 const description = computed(() => {
   return {
-    503: 'Sorry, we are doing some maintenance. Please check back soon.',
-    500: 'Whoops, something went wrong on our servers.',
+    401: 'Sorry, you do not have authorization to access.',
+    402: 'Sorry, request requires payment.',
     404: 'Sorry, the page you are looking for could not be found.',
     403: 'Sorry, you are forbidden from accessing this page.',
+    419: 'Sorry, the page expired, please try again.',
+    429: 'Sorry, you made a lot of requests.',
+    500: 'Whoops, something went wrong on our servers.',
+    503: 'Sorry, we are doing some maintenance. Please check back soon.',
   }[props.status]
 })
 
